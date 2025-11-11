@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register - TRAVELIFY</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('Website Banner.jpg');
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      padding: 20px;
+      background-color: #0073e6;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      color: white;
+    }
+    .header-content {
+      display: flex;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .site-logo {
+      height: 65px;
+      width: 65px;
+      border-radius: 12px;
+      margin-right: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .site-title h1 {
+      margin: 0;
+      font-size: 2.2em;
+      letter-spacing: 2px;
+    }
+    .site-title p {
+      margin: 6px 0 0 0;
+      font-size: 1em;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #1a56c5;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      padding: 0 20px;
+    }
+    nav ul {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    nav a {
+      display: block;
+      padding: 15px 20px;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: #2575fc;
+      border-radius: 4px;
+    }
+    .user-info {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+    .user-info a {
+      background: #2575fc;
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .user-info a:hover {
+      background: #1a56c5;
+    }
+    main {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .register-box {
+      background: white;
+      padding: 35px;
+      border-radius: 12px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 420px;
+    }
+    .register-box h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2575fc;
+      font-size: 1.8em;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1.5px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+    input:focus {
+      outline: none;
+      border-color: #2575fc;
+    }
+    .error-message {
+      color: #e74c3c;
+      font-size: 13px;
+      margin-top: 4px;
+      min-height: 18px;
+    }
+    .success-message {
+      color: #27ae60;
+      font-size: 14px;
+      margin-top: 4px;
+      text-align: center;
+      font-weight: 600;
+    }
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border: none;
+      background: #2575fc;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover:not(:disabled) {
+      background: #1a56c5;
+    }
+    button:disabled {
+      background: #95a5a6;
+      cursor: not-allowed;
+    }
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    .login-link a {
+      color: #2575fc;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      background-color: #0073e6;
+      text-align: center;
+      color: white;
+      padding: 15px;
+      font-size: 14px;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <img src="Screenshot 2025-09-02 121057.png" alt="Travelify Logo" class="site-logo">
+      <div class="site-title">
+        <h1>TRAVELIFY</h1>
+        <p>ONLINE TICKET & HOTEL BOOKING FOR ALL PEOPLE'S JOURNEY</p>
+      </div>
+    </div>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About Us</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="/help">Help</a></li>
+    </ul>
+    <div class="user-info">
+      <a href="/login">Login</a>
+    </div>
+  </nav>
+  <main>
+    <div class="register-box">
+      <h2>Create Account</h2>
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" placeholder="Enter your full name" required>
+          <div id="nameError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="Enter your email" required>
+          <div id="emailError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Create password (min 8 characters)" required>
+          <div id="passwordError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" placeholder="Re-enter password" required>
+          <div id="confirmError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="Enter 10-digit phone number" required>
+          <div id="phoneError" class="error-message"></div>
+        </div>
+        <div id="generalMessage" class="error-message"></div>
+        <button type="submit" id="submitBtn">Register</button>
+      </form>
+      <div class="login-link">
+        Already have an account? <a href="/login">Login here</a>
+      </div>
+    </div>
+  </main>
+  <footer>
+    &copy; 2025 TRAVELIFY Online Ticket & Hotel Booking. All rights reserved.
+  </footer>
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      console.log('📝 Form submitted');
+      
+      // Clear previous errors
+      document.querySelectorAll('.error-message').forEach(el => el.innerText = '');
+      document.getElementById('generalMessage').className = 'error-message';
+      
+      const name = document.getElementById('fullName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const phone = document.getElementById('phone').value.trim();
+      
+      let isValid = true;
+      
+      // Validate name
+      if (name.length < 2) {
+        document.getElementById('nameError').innerText = 'Name must be at least 2 characters';
+        isValid = false;
+      }
+      
+      // Validate email
+      if (!/^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+        document.getElementById('emailError').innerText = 'Enter a valid email address';
+        isValid = false;
+      }
+      
+      // Validate password
+      if (password.length < 8) {
+        document.getElementById('passwordError').innerText = 'Password must be at least 8 characters';
+        isValid = false;
+      }
+      
+      // Validate password match
+      if (password !== confirmPassword) {
+        document.getElementById('confirmError').innerText = 'Passwords do not match';
+        isValid = false;
+      }
+      
+      // Validate phone
+      if (!/^\d{10}$/.test(phone)) {
+        document.getElementById('phoneError').innerText = 'Enter a valid 10-digit phone number';
+        isValid = false;
+      }
+      
+      if (!isValid) {
+        console.log('❌ Validation failed');
+        return;
+      }
+      
+      console.log('✅ Validation passed');
+      
+      // Disable button and show loading state
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Registering...';
+      
+      const requestData = {
+        fullName: name,
+        email: email,
+        password: password,
+        phone: phone
+      };
+      
+      console.log('📤 Sending request:', requestData);
+      
+      // Send data to backend
+      fetch('/register', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        credentials: 'same-origin',
+        body: JSON.stringify(requestData)
+      })
+      .then(response => {
+        console.log('📥 Response status:', response.status);
+        return response.json();
+      })
+      .then(data => {
+        console.log('📊 Response data:', data);
+        
+        if (data.success === true) {
+          // Show success message
+          document.getElementById('generalMessage').className = 'success-message';
+          document.getElementById('generalMessage').innerText = data.message + ' Redirecting to OTP page...';
+          
+          console.log('✅ Registration successful, redirecting to:', data.redirect);
+          
+          // Redirect to OTP page after 1.5 seconds
+          setTimeout(() => {
+            console.log('🔄 Executing redirect...');
+            window.location.href = data.redirect;
+          }, 1500);
+        } else {
+          // Show error message
+          console.log('❌ Registration failed:', data.error);
+          document.getElementById('generalMessage').className = 'error-message';
+          document.getElementById('generalMessage').innerText = data.error || 'Registration failed';
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Register';
+        }
+      })
+      .catch(error => {
+        console.error('❌ Fetch Error:', error);
+        document.getElementById('generalMessage').className = 'error-message';
+        document.getElementById('generalMessage').innerText = 'Network error. Please check your connection and try again.';
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Register';
+      });
+    });
+  </script>
+</body>
+</html>

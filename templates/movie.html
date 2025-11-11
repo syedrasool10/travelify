@@ -1,0 +1,214 @@
+<html>
+<head>
+<title>Movie Tickets - Travelify</title>
+<style>
+  body {
+    margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7f8; color: #333;
+    background-image: url(Website\ Banner.jpg);
+    background-position: center;
+    background-size: cover;
+  }
+  header {
+    background-color: #0073e6; color: white; padding: 1rem 2rem;
+  }
+  header h1 { margin: 0; }
+  nav a {
+    color: white; margin-left: 2rem; font-weight: 600; text-decoration: none;
+  }
+  nav a:hover { text-decoration: underline; }
+  .content {
+    max-width: 600px; margin: 2rem auto 4rem auto;
+    background: white; padding: 2rem; border-radius: 10px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  }
+  h2 { margin-top: 0; color: #0073e6; }
+  form {
+    display: flex; flex-direction: column; gap: 1.2rem;
+  }
+  label {
+    font-weight: 600; color: #555; display: flex; flex-direction: column;
+  }
+  input, select {
+    margin-top: 0.4rem; padding: 0.7rem 0.9rem;
+    border: 1.5px solid #ddd; border-radius: 6px;
+    font-size: 1rem; transition: border-color 0.3s ease;
+  }
+  input:focus, select:focus {
+    border-color: #0073e6; outline: none;
+  }
+  button {
+    cursor: pointer; background-color: #0073e6; border: none; 
+    color: white; padding: 0.85rem 1.8rem; font-size: 1.1rem;
+    border-radius: 7px;  transition: background-color 0.3s ease;
+  }
+  button:hover { background-color: #005bb5; }
+ footer {
+       background-color: #0073e6;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 14px;
+      color:white;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      margin-top: auto;
+    }
+    
+     header {
+      text-align: left;
+      padding: 20px;
+      background-color: #0073e6;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      position: relative;
+      color: white;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+        background-color: #0073e6;
+    }
+
+    .site-logo {
+      height: 65px;
+      width: 65px;
+      border-radius: 12px;
+      margin-right: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .site-title h1 {
+      margin: 0;
+      font-size: 2.2em;
+      color: white;
+      letter-spacing: 2px;
+    }
+
+    .site-title p {
+      margin: 6px 0 0 0;
+      font-size: 1em;
+      color: #f5f5f5;
+    }
+     nav {
+      display: flex;
+      justify-content: center;
+      background-color: #0073e6;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 10px;
+      text-decoration: none;
+    }
+    nav ul li {
+      display: inline;
+      text-decoration: none;
+    }
+    nav a {
+      display: block;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    nav a:hover {
+      background: #2575fc;
+      border-radius: 4px;
+    }
+    .user-info {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding-right: 20px;
+    }
+    .user-info a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 4px;
+      background: #2575fc;
+      transition: background 0.3s ease;
+    }
+    .user-info a:hover {
+      background: #1a56c5;
+    }
+   
+  
+</style>
+</head>
+<body>
+
+<header>
+<div class="header-content">
+      <img src="/static/Screenshot 2025-09-02 121057.png" alt="Travelify Logo" class="site-logo">
+      <div class="site-title">
+        <h1>TRAVELIFY</h1>
+        <p>ONLINE TICKET & HOTEL BOOKING FOR ALL PEOPLE'S JOURNEY</p>
+      </div>
+    </div>
+  </header>
+   <nav>
+    <ul>
+      <li><a href="/bus" style="text-decoration: none;">Bus Ticket</a></li>
+      <li><a href="/train" style="text-decoration: none;">Train Ticket</a></li>
+      <li><a href="/flight" style="text-decoration: none;">Flight Ticket</a></li>
+      <li><a href="/hotel" style="text-decoration: none;">Hotel Ticket</a></li>
+    </ul>
+      <div class="user-info">
+    {% if session.get('user') %}
+      <span style="color: white; padding: 8px 14px;">Welcome, {{ session['user']['full_name'] }}!</span>
+      <a href="/logout">Logout</a>
+    {% else %}
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    {% endif %}
+  </div>
+  </nav>
+
+<div class="content">
+  <h2>Book Movie Tickets</h2>
+  <form>
+    <label>
+      Location
+      <input type="text" placeholder="City or Theater" required />
+    </label>
+    <label>
+      Date
+      <input type="date" required />
+    </label>
+    <label>
+      Time
+      <select required>
+        <option>Morning</option>
+        <option>Afternoon</option>
+        <option>Evening</option>
+        <option>Night</option>
+      </select>
+    </label>
+    <label>
+      Number of Tickets
+      <select required>
+        <option>1 Ticket</option>
+        <option>2 Tickets</option>
+        <option>3 Tickets</option>
+        <option>4 Tickets</option>
+      </select>
+    </label>
+    </form>
+   <a href="/seat"> <button>submit</button></a>
+  
+</div>
+
+</body>
+<br>
+<br>
+<br>
+
+  <footer>
+    &copy; 2025 TRAVELIFY Online Ticket & Hotel Booking. All rights reserved.
+  </footer>
+</html>

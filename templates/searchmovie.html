@@ -1,0 +1,306 @@
+<html>
+<head>
+  <title>Movies & Theatres - Travelify</title>
+  <style>
+    body {
+      background-image: url(Website\ Banner.jpg);
+      background-position: center;
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 950px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.09);
+      padding: 2rem;
+    }
+    h2 {
+      color: #0073e6;
+      margin-top: 0;
+    }
+    .movie-list {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .movie-card {
+      background: #eef7ff;
+      border-radius: 11px;
+      box-shadow: 0 3px 10px rgba(0,0,0,.07);
+      width: calc(25% - 18px); /* 4 per row with gap */
+      min-width: 200px;
+      padding: 1rem;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .movie-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
+    .movie-title {
+      font-size: 1.18rem;
+      font-weight: bold;
+      margin-top: 7px;
+      margin-bottom: 3px;
+      color: #005bb5;
+    }
+    .movie-year {
+      font-size: 0.85rem;
+      color: #444;
+    }
+    .theatre-list {
+      margin-top: 2rem; 
+      padding:0; 
+      list-style: none;
+    }
+    .theatre-list li {
+      background: #e8effb; 
+      margin-bottom: 10px; 
+      padding: 15px;
+      border-radius: 7px; 
+      font-size: 1.05rem;
+    }
+    .theatre-list a {
+      text-decoration:none; 
+      color: #0073e6; 
+      font-weight:600;
+    }
+    .theatre-list a:hover {
+      text-decoration: underline; 
+      color: #005bb5;
+    }
+    @media (max-width:900px) {
+      .movie-card { width: calc(50% - 12px);}
+    }
+    @media (max-width:600px) {
+      .movie-list { flex-direction: column; gap: 19px;}
+      .movie-card {width: 100%;}
+    }
+    footer {
+      background-color: #0073e6;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 14px;
+      color:white;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      margin-top: auto;
+    }
+    .book-btn {
+      margin-top: 15px;
+      display: inline-block;
+      padding: 10px 20px;
+      border: none;
+      background: #2575fc;
+      color: white;
+      font-size: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      text-decoration: none;
+    }
+    .book-btn:hover {
+      background: #1a56c5;
+    }
+    header {
+      text-align: left;
+      padding: 20px;
+      background-color: #0073e6;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      position: relative;
+      color: white;
+    }
+    .header-content {
+      display: flex;
+      align-items: center;
+      background-color: #0073e6;
+    }
+    .site-logo {
+      height: 65px;
+      width: 65px;
+      border-radius: 12px;
+      margin-right: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .site-title h1 {
+      margin: 0;
+      font-size: 2.2em;
+      color: white;
+      letter-spacing: 2px;
+    }
+    .site-title p {
+      margin: 6px 0 0 0;
+      font-size: 1em;
+      color: #f5f5f5;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #0073e6;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 10px;
+    }
+    nav ul li {
+      display: inline;
+    }
+    nav a {
+      display: block;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    nav a:hover {
+      background: #2575fc;
+      border-radius: 4px;
+    }
+    .user-info {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding-right: 20px;
+    }
+    .user-info a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 4px;
+      background: #2575fc;
+      transition: background 0.3s ease;
+    }
+    .user-info a:hover {
+      background: #1a56c5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <img src="/static/Screenshot 2025-09-02 121057.png" alt="Travelify Logo" class="site-logo">
+      <div class="site-title">
+        <h1>TRAVELIFY</h1>
+        <p>ONLINE TICKET & HOTEL BOOKING FOR ALL PEOPLE'S JOURNEY</p>
+      </div>
+    </div>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="/bus">Bus Ticket</a></li>
+      <li><a href="/train">Train Ticket</a></li>
+      <li><a href="/flight">Flight Ticket</a></li>
+      <li><a href="/hotel">Hotel Ticket</a></li>
+    </ul>
+      <div class="user-info">
+    {% if session.get('user') %}
+      <span style="color: white; padding: 8px 14px;">Welcome, {{ session['user']['full_name'] }}!</span>
+      <a href="/logout">Logout</a>
+    {% else %}
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    {% endif %}
+  </div>
+  </nav>
+
+  <div class="container">
+    <h2>Movies</h2>
+    <div class="movie-list">
+      <div class="movie-card">
+        <img src="/static/coolie.jpeg" alt="coolie">
+        <div class="movie-title">Coolie</div>
+        <div class="movie-year">2025</div>
+        <a href="/movie" class="book-btn">Book Now</a>
+      </div>
+      <div class="movie-card">
+        <img src="/static/jailer.jpeg" alt="Jailer Poster" />
+        <div class="movie-title">Jailer</div>
+        <div class="movie-year">2023</div>
+        <a href="/movie" class="book-btn">Book Now</a>
+      </div>
+      <div class="movie-card">
+        <img src="https://m.media-amazon.com/images/I/81ExhpBEbHL._AC_SY679_.jpg" alt="Avengers: Endgame Poster" />
+        <div class="movie-title">Avengers: Endgame</div>
+        <div class="movie-year">2019</div>
+        <a href="/movie" class="book-btn">Book Now</a>
+      </div>
+      <div class="movie-card">
+        <img src="https://m.media-amazon.com/images/I/91KkWf50SoL._AC_SY679_.jpg" alt="Dark Knight Poster" />
+        <div class="movie-title">Dark Knight</div>
+        <div class="movie-year">2008</div>
+        <a href="/movie" class="book-btn">Book Now</a>
+      </div>
+      <div class="movie-card">
+        <img src="https://m.media-amazon.com/images/I/71c05lTE03L._AC_SY679_.jpg" alt="Inception Poster" />
+        <div class="movie-title">Inception</div>
+        <div class="movie-year">2010</div>
+        <a href="/movie" class="book-btn">Book Now</a>
+      </div>
+      <div class="movie-card">
+        <img src="/static/pathaan.jpeg" alt="Pathaan Poster" />
+        <div class="movie-title">Pathaan</div>
+        <div class="movie-year">2023</div>
+        <a href="/movie" class="book-btn">Book Now</a>
+      </div>
+      <div class="movie-card">
+        <img src="/static/pushpa.jpeg" alt="Pushpa: The Rise Poster" />
+        <div class="movie-title">Pushpa: The Rise</div>
+        <div class="movie-year">2021</div>
+        <a href="/movie" class="book-btn">Book Now</a>
+      </div>
+      <div class="movie-card">
+        <img src="/static/kgf.jpeg" alt="KGF: Chapter 2 Poster" />
+        <div class="movie-title">KGF: Chapter 2</div>
+        <div class="movie-year">2022</div>
+        <a href="/movie" class="book-btn">Book Now</a>
+      </div>
+      <div class="movie-card">
+        <img src="/static/spiderman.jpeg" alt="Spider-Man: No Way Home Poster" />
+        <div class="movie-title">Spider-Man: No Way Home</div>
+        <div class="movie-year">2021</div>
+        <a href="/movie" class="book-btn">Book Now</a>
+      </div>
+      <div class="movie-card">
+        <img src="/static/rrr.jpeg" alt="RRR Poster" />
+        <div class="movie-title">RRR</div>
+        <div class="movie-year">2022</div>
+        <a href="/movie" class="book-btn">Book Now</a>
+      </div>
+      <div class="movie-card">
+        <img src="/static/gadar2.jpeg" alt="Gadar 2 Poster" />
+        <div class="movie-title">Gadar 2</div>
+        <div class="movie-year">2023</div>
+        <a href="/movie" class="book-btn">Book Now</a>
+      </div>
+    </div>
+
+    <h2 style="margin-top:2.5rem">Theatres in Madurai</h2>
+    <ul class="theatre-list">
+      <li><a href="https://www.google.com/maps/place/INOX/@9.9382436,78.1333967,17z/data=!3m1!4b1!4m6!3m5!1s0x3b00c5c05432ebf1:0xdd8aac1b388a4ba1!8m2!3d9.9382436!4d78.1359716!16s%2Fg%2F119x59y8_?entry=ttu&g_ep=EgoyMDI1MDkwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank">INOX, Madurai</a></li>
+      <li><a href="#" target="_blank">The priya Complex, Madurai</a></li>
+      <li><a href="https://www.google.com/maps/place/Cineplex+Madurai/" target="_blank">Cineplex, Madurai</a></li>
+      <li><a href="https://www.google.com/maps/place/Meenakshi+Cinema+Madurai/" target="_blank">Meenakshi Cinema, Madurai</a></li>
+      <li><a href="https://www.google.com/maps/place/Sree+Theatre+Madurai/" target="_blank">Sree Theatre, Madurai</a></li>
+      <li><a href="https://www.google.com/maps/place/Vel+Cinema+Madurai/" target="_blank">Vel Cinema, Madurai</a></li>
+      <li><a href="https://www.google.com/maps/place/Thanga+Regal+Theatre+Madurai/" target="_blank">Thanga Regal Theatre, Madurai</a></li>
+      <li><a href="https://www.google.com/maps/place/Sangeetha+Theatre+Madurai/" target="_blank">Sangeetha Theatre, Madurai</a></li>
+    </ul>
+  </div>
+</body>
+<footer>
+  &copy; 2025 TRAVELIFY Online Ticket & Hotel Booking. All rights reserved.
+</footer>
+</html>

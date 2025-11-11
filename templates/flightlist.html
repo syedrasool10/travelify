@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Available Flights - Travelify</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url(Website\ Banner.jpg);
+      background-position: center;
+      background-size: cover;
+      color: #333;
+    }
+    header {
+      background-color: #0073e6;
+      color: white;
+      padding: 1rem 2rem;
+    }
+    header h1 {
+      margin: 0;
+    }
+    nav a {
+      color: white;
+      margin-left: 2rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .flight-list {
+      max-width: 900px;
+      margin: 2rem auto 4rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+    }
+    h2 {
+      color: #0073e6;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+    th, td {
+      padding: 0.8rem 0.7rem;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background-color: #f7fafc;
+      color: #0073e6;
+      font-weight: 700;
+    }
+    .book-btn {
+      background-color: #0073e6;
+      color: white;
+      border: none;
+      padding: 0.55rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .book-btn:hover {
+      background-color: #005bb5;
+    }
+     footer {
+       background-color: #0073e6;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 14px;
+      color:white;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      margin-top: auto;
+    }
+    header {
+      text-align: left;
+      padding: 20px;
+      background-color: #0073e6;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      position: relative;
+      color: white;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+        background-color: #0073e6;
+    }
+
+    .site-logo {
+      height: 65px;
+      width: 65px;
+      border-radius: 12px;
+      margin-right: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .site-title h1 {
+      margin: 0;
+      font-size: 2.2em;
+      color: white;
+      letter-spacing: 2px;
+    }
+
+    .site-title p {
+      margin: 6px 0 0 0;
+      font-size: 1em;
+      color: #f5f5f5;
+    }
+        nav {
+      display: flex;
+      justify-content: center;
+      background-color: #0073e6;
+     
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 10px;
+    }
+    nav ul li {
+      display: inline;
+    }
+    nav a {
+      display: block;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    nav a:hover {
+      background: #2575fc;
+      border-radius: 4px;
+    }
+    
+    .user-info {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding-right: 20px;
+    }
+    .user-info a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 4px;
+      background: #2575fc;
+      transition: background 0.3s ease;
+    }
+    .user-info a:hover {
+      background: #1a56c5;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+ <div class="header-content">
+      <img src="/static/Screenshot 2025-09-02 121057.png" alt="Travelify Logo" class="site-logo">
+      <div class="site-title">
+        <h1>TRAVELIFY</h1>
+        <p>ONLINE TICKET & HOTEL BOOKING FOR ALL PEOPLE'S JOURNEY</p>
+      </div>
+    </div>
+  </header>
+   <nav>
+    <ul>
+      <li><a href="/searchmovies" style="text-decoration: none;">Movie Ticket</a></li>
+      <li><a href="/bus" style="text-decoration: none;">Bus Ticket</a></li>
+      <li><a href="/train" style="text-decoration: none;">Train Ticket</a></li>
+      <li><a href="/hotel" style="text-decoration: none;">Hotel Ticket</a></li>
+    </ul>
+      <div class="user-info">
+    {% if session.get('user') %}
+      <span style="color: white; padding: 8px 14px;">Welcome, {{ session['user']['full_name'] }}!</span>
+      <a href="/logout">Logout</a>
+    {% else %}
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    {% endif %}
+  </div>
+  </nav>
+<div class="flight-list">
+  <h2>Available Flights</h2>
+  <table>
+    <tr>
+      <th>Flight No.</th>
+      <th>Airline</th>
+      <th>Departure</th>
+      <th>Arrival</th>
+      <th>Duration</th>
+      <th>Price (₹)</th>
+      <th>Booking</th>
+    </tr>
+    <tr>
+      <td>AI202</td><td>Air India</td><td>09:15</td><td>11:25</td><td>2h 10m</td><td>5,900</td>
+      <td><a class="submit" href="/qr"><button class="book-btn">Book Now</button></a></td>
+    </tr>
+    <tr>
+      <td>6E408</td><td>IndiGo</td><td>10:05</td><td>12:00</td><td>1h 55m</td><td>4,500</td>
+      <td><a class="submit" href="/qr"><button class="book-btn">Book Now</button></a></td>
+    </tr>
+    <tr>
+      <td>SG322</td><td>SpiceJet</td><td>11:20</td><td>13:30</td><td>2h 10m</td><td>5,200</td>
+      <td><a class="submit" href="/qr"><button class="book-btn">Book Now</button></a></td>
+    </tr>
+    <tr>
+      <td>UK102</td><td>Vistara</td><td>12:25</td><td>14:30</td><td>2h 05m</td><td>5,700</td>
+      <td><a class="submit" href="/qr"><button class="book-btn">Book Now</button></a></td>
+    </tr>
+    <tr>
+      <td>QZ650</td><td>Akasa Air</td><td>13:40</td><td>15:35</td><td>1h 55m</td><td>4,950</td>
+      <td><a class="submit" href="/qr"><button class="book-btn">Book Now</button></a></td>
+    </tr>
+    <tr>
+      <td>IX511</td><td>Air India Express</td><td>14:55</td><td>16:50</td><td>1h 55m</td><td>4,700</td>
+      <td><a class="submit" href="/qr"><button class="book-btn">Book Now</button></a></td>
+    </tr>
+    <tr>
+      <td>G8105</td><td>Go First</td><td>15:30</td><td>17:25</td><td>1h 55m</td><td>4,800</td>
+      <td><a class="submit" href="/qr"><button class="book-btn">Book Now</button></a></td>
+    </tr>
+    <tr>
+      <td>AI707</td><td>Air India</td><td>17:00</td><td>19:10</td><td>2h 10m</td><td>6,200</td>
+      <td><a class="submit" href="/qr"><button class="book-btn">Book Now</button></a></td>
+    </tr>
+    <tr>
+      <td>6E609</td><td>IndiGo</td><td>18:10</td><td>20:05</td><td>1h 55m</td><td>5,100</td>
+      <td><a class="submit" href="/qr"><button class="book-btn">Book Now</button></a></td>
+    </tr>
+    <tr>
+      <td>SG508</td><td>SpiceJet</td><td>19:25</td><td>21:20</td><td>1h 55m</td><td>5,250</td>
+      <td><a class="submit" href="/qr"><button class="book-btn">Book Now</button></a></td>
+    </tr>
+    <tr>
+      <td>UK210</td><td>Vistara</td><td>20:45</td><td>22:50</td><td>2h 05m</td><td>6,000</td>
+      <td><a class="submit" href="/qr"><button class="book-btn">Book Now</button></a></td>
+    </tr>
+  </table>
+</div>
+
+ <footer>
+    &copy; 2025 TRAVELIFY Online Ticket & Hotel Booking. All rights reserved.
+  </footer>
+
+</body>
+</html>

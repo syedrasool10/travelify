@@ -1,0 +1,264 @@
+<html>
+<head>
+<title>Train List - Travelify</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7f8;
+    color: #333;
+    background-image: url(Website\ Banner.jpg);
+    background-position: center;
+    background-size: cover;
+  }
+  header {
+    background-color: #0073e6;
+    color: white;
+    padding: 1rem 2rem;
+  }
+  header h1 {
+    margin: 0;
+  }
+  nav a {
+    color: white;
+    margin-left: 2rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  nav a:hover {
+    text-decoration: underline;
+  }
+  .content {
+    max-width: 600px;
+    margin: 2rem auto 4rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  }
+  h2 {
+    margin-top: 0;
+    color: #0073e6;
+    text-align: center;
+  }
+  .train-list {
+    margin-top: 2.5rem;
+  }
+  .train-list h3 {
+    color: #0073e6;
+    margin: 0 0 1.2rem 0;
+    text-align: center;
+    font-size: 1.12rem;
+    letter-spacing: 0.5px;
+  }
+  .train-item {
+    background: #f6fbff;
+    border: 1.2px solid #e2e6ea;
+    padding: 1rem 1.2rem;
+    border-radius: 7px;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    box-shadow: 0 2px 5px rgb(0 0 0 / 0.08);
+  }
+  .train-name {
+    font-weight: 700;
+    color: #0073e6;
+  }
+  .train-detail {
+    color: #34495e;
+  }
+   footer {
+       background-color: #0073e6;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 14px;
+      color:white;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      margin-top: auto;
+    }
+     header {
+      text-align: left;
+      padding: 20px;
+      background-color: #0073e6;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      position: relative;
+      color: white;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+        background-color: #0073e6;
+    }
+
+    .site-logo {
+      height: 65px;
+      width: 65px;
+      border-radius: 12px;
+      margin-right: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .site-title h1 {
+      margin: 0;
+      font-size: 2.2em;
+      color: white;
+      letter-spacing: 2px;
+    }
+
+    .site-title p {
+      margin: 6px 0 0 0;
+      font-size: 1em;
+      color: #f5f5f5;
+    }
+      nav {
+      display: flex;
+      justify-content: center;
+      background-color: #0073e6;
+      
+     
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 5px;
+      padding: auto;
+    }
+    nav ul li {
+      display: inline;
+  
+    }
+    nav a {
+      display: block;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    nav a:hover {
+      background: #2575fc;
+      border-radius: 4px;
+    }
+    
+    .user-info {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding-right: 20px;
+    }
+    .user-info a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 4px;
+      background: #2575fc;
+      transition: background 0.3s ease;
+    }
+    .user-info a:hover {
+      background: #1a56c5;
+    }
+    .book-btn {
+      padding: 0.53rem 1.16rem; background:#0073e6; color: white;
+      border: none; border-radius: 5px; font-size: 1.05em; font-weight:600;
+      cursor:pointer; transition: background 0.19s;}
+    .book-btn:hover { background: #005bb5;}
+</style>
+</head>
+<body>
+
+  <header>
+ <div class="header-content">
+      <img src="/static/Screenshot 2025-09-02 121057.png" alt="Travelify Logo" class="site-logo">
+      <div class="site-title">
+        <h1>TRAVELIFY</h1>
+        <p>ONLINE TICKET & HOTEL BOOKING FOR ALL PEOPLE'S JOURNEY</p>
+      </div>
+    </div>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="/searchmovies" style="text-decoration: none;">Movie Ticket</a></li>
+      <li><a href="/bus" style="text-decoration: none;">Bus Ticket</a></li>
+      <li><a href="/flight" style="text-decoration: none;">Flight Ticket</a></li>
+      <li><a href="/hotel" style="text-decoration: none;">Hotel Ticket</a></li>
+    </ul>
+      <div class="user-info">
+    {% if session.get('user') %}
+      <span style="color: white; padding: 8px 14px;">Welcome, {{ session['user']['full_name'] }}!</span>
+      <a href="/logout">Logout</a>
+    {% else %}
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    {% endif %}
+  </div>
+  </nav>
+
+<div class="content">
+  <h2>Available Trains</h2>
+  <div class="train-list">
+    <div class="train-item">
+      <span class="train-name">Rajdhani Express</span>
+      <span class="train-detail">08:30 - 18:50 | AC 2 Tier</span>
+      <a class="submit" href="/qr"><button class="book-btn">Book Now</button></a>
+    </div>
+    <div class="train-item">
+      <span class="train-name">Shatabdi Express</span>
+      <span class="train-detail">09:20 - 15:30 | AC Chair Car</span>
+      <a class="submit" href="/qr"><button class="book-btn">Book Now</button></a>
+    </div>
+    <div class="train-item">
+      <span class="train-name">Duronto Express</span>
+      <span class="train-detail">11:00 - 21:10 | 1st AC</span>
+      <a class="submit" href="/qr"><button class="book-btn">Book Now</button></a>
+    </div>
+    <div class="train-item">
+      <span class="train-name">Gareeb Rath</span>
+      <span class="train-detail">14:15 - 01:40 | Sleeper</span>
+      <a class="submit" href="/qr"><button class="book-btn">Book Now</button></a>
+    </div>
+    <div class="train-item">
+      <span class="train-name">Intercity Express</span>
+      <span class="train-detail">17:25 - 23:05 | AC 3 Tier</span>
+      <a class="submit" href="/qr"><button class="book-btn">Book Now</button></a>
+    </div>
+    <div class="train-item">
+      <span class="train-name">Jan Shatabdi</span>
+      <span class="train-detail">06:10 - 13:30 | Second Class</span>
+      <a class="submit" href="/qr"><button class="book-btn">Book Now</button></a>
+    </div>
+    <div class="train-item">
+      <span class="train-name">Vande Bharat Express</span>
+      <span class="train-detail">07:00 - 13:15 | Executive Class</span>
+      <a class="submit" href="/qr"><button class="book-btn">Book Now</button></a>
+    </div>
+    <div class="train-item">
+      <span class="train-name">Mail Express</span>
+      <span class="train-detail">12:45 - 22:05 | Sleeper</span>
+      <a class="submit" href="/qr"><button class="book-btn">Book Now</button></a>
+    </div>
+    <div class="train-item">
+      <span class="train-name">Sampark Kranti</span>
+      <span class="train-detail">16:00 - 02:20 | AC 2 Tier</span>
+      <a class="submit" href="/qr"><button class="book-btn">Book Now</button></a>
+    </div>
+    <div class="train-item">
+      <span class="train-name">Superfast Express</span>
+      <span class="train-detail">18:30 - 05:50 | AC 3 Tier</span>
+      <a class="submit" href="/qr"><button class="book-btn">Book Now</button></a>
+    </div>
+  </div>
+</div>
+
+
+  <footer>
+    &copy; 2025 TRAVELIFY Online Ticket & Hotel Booking. All rights reserved.
+  </footer>
+</body>
+</html>

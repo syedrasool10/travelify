@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blue Theme Theatre Seat Booking</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-image: url('Website Banner.jpg');
+      background-position: center;
+      background-size: cover;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #e0e8f7;
+      padding: 0;
+      margin: 0;
+    }
+    .theatre-container {
+      max-width: 98vw;
+      margin: 40px auto 0 auto;
+      background:white;
+      border-radius: 16px;
+      padding: 24px 5px 36px 5px;
+      box-shadow: 0 7px 48px 0 #0003;
+      position: relative;
+    }
+    .screen {
+      width: 99%;
+      max-width: 1020px;
+      height: 34px;
+      margin: 28px auto 40px;
+      background: linear-gradient(90deg,#4888c9,#68edff,#4888c9);
+      border-radius: 18px 18px 50px 50px/16px 16px 50px 50px;
+      box-shadow: 0 10px 25px 2px #0002;
+      text-align: center;
+      font-size: 1.17rem;
+      letter-spacing: 3px;
+      line-height: 32px;
+      color: #093658;
+      font-weight: bold;
+    }
+    .seat-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+    .row-label {
+      width: 32px;
+      padding-top: 5px;
+      text-align: left;
+      color: #3bbbff;
+      font-size: 1.07rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+    .seat {
+      width: 24px;
+      height: 24px;
+      margin: 0 2.2px 0 2.2px;
+      border-radius: 6px;
+      background: #2a63c4;
+      border: 2.2px solid #1a2940;
+      color: #dbe7fb;
+      font-weight: 500;
+      font-size: 0.93rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.18s, border 0.14s;
+      box-shadow: 0 2px 8px #080e225c;
+      user-select: none;
+    }
+    .seat.selected {
+      background: #24cedf;
+      border-color: #015f75;
+      color: #082f43;
+      font-weight: bold;
+    }
+    .seat.occupied {
+      background: #071731;
+      border-color: #194464;
+      color: #497290;
+      cursor: not-allowed;
+      text-decoration: line-through;
+      opacity: 0.54;
+    }
+    .legend {
+      display: flex;
+      gap: 2.2rem;
+      justify-content: center;
+      margin: 24px 0 16px 0;
+      font-size: 1rem;
+    }
+    .legend .seat {
+      width: 23px;
+      height: 23px;
+      margin: 0 5px 0 0;
+      border-radius: 5px;
+      font-size: 0.83rem;
+    }
+    .legend-label {color: #4adcf8;}
+    #selectedSeats {
+      color: #0ffebf;
+      font-weight: bold;
+      font-size: 1.04em;
+      margin-left: 5px;
+    }
+    @media (max-width: 900px) {
+      .seat { width: 18px; height: 18px; font-size: 0.7rem;}
+      .row-label { width: 18px; font-size: 0.9rem;}
+      .screen { font-size: 0.98rem; }
+      .booking-header { flex-direction: column; gap: 6px; align-items: flex-start; }
+      .site-logo { height: 39px; width: 39px; }
+      .booking-title-area h2 { font-size: 1.15rem;}
+    }
+    @media (max-width: 710px) {
+      .theatre-container { padding: 6px 1.5vw 18px 1.5vw;}
+    }
+     header {
+      text-align: left;
+      padding: 20px;
+      background-color: #0073e6;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      position: relative;
+      color: white;
+    }
+    .header-content {
+      display: flex;
+      align-items: center;
+      background-color: #0073e6;
+    }
+    .site-logo {
+      height: 65px;
+      width: 65px;
+      border-radius: 12px;
+      margin-right: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .site-title h1 {
+      margin: 0;
+      font-size: 2.2em;
+      color: white;
+      letter-spacing: 2px;
+    }
+    .site-title p {
+      margin: 6px 0 0 0;
+      font-size: 1em;
+      color: #f5f5f5;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #0073e6;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 10px;
+    }
+    nav ul li {
+      display: inline;
+    }
+    nav a {
+      display: block;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    nav a:hover {
+      background: #2575fc;
+      border-radius: 4px;
+    }
+    .user-info {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding-right: 20px;
+    }
+    .user-info a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 4px;
+      background: #2575fc;
+      transition: background 0.3s ease;
+    }
+    .user-info a:hover {
+      background: #1a56c5;
+    }
+     footer {
+      background-color: #0073e6;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 14px;
+      color:white;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <img src="/static/Screenshot 2025-09-02 121057.png" alt="Travelify Logo" class="site-logo">
+      <div class="site-title">
+        <h1>TRAVELIFY</h1>
+        <p>ONLINE TICKET & HOTEL BOOKING FOR ALL PEOPLE'S JOURNEY</p>
+      </div>
+    </div>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="/bus">Bus Ticket</a></li>
+      <li><a href="/train">Train Ticket</a></li>
+      <li><a href="/flight">Flight Ticket</a></li>
+      <li><a href="/hotel">Hotel Ticket</a></li>
+    </ul>
+      <div class="user-info">
+    {% if session.get('user') %}
+      <span style="color: white; padding: 8px 14px;">Welcome, {{ session['user']['full_name'] }}!</span>
+      <a href="/logout">Logout</a>
+    {% else %}
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    {% endif %}
+  </div>
+  </nav>
+  <div class="theatre-container">
+    <div class="screen mb-4">SCREEN THIS WAY</div>
+    <div id="seatsArea"></div>
+    <div class="legend">
+      <div><div class="seat selected"></div> <span class="legend-label">Selected</span></div>
+      <div><div class="seat occupied"></div> <span class="legend-label">Booked</span></div>
+      <div><div class="seat"></div> <span class="legend-label">Available</span></div>
+    </div>
+    <div class="mt-3 mb-3">
+      <span>Selected Seats:</span> <span id="selectedSeats">None</span>
+    </div>
+    <button type="button" class="btn btn-info mt-1 mb-2 px-4" id="confirmBtn" disabled style="color:#1d447a;font-weight:bold;font-size: 1rem;">Confirm Booking</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const rows = 20; 
+    const seatsPerRow = 20; 
+    const occupiedSeats = [
+      ...Array(rows).fill().flatMap((_, i) => [String.fromCharCode(65 + i) + '2', String.fromCharCode(65 + i) + '10']),
+      "B5", "C17", "D12", "E1", "F15", "G9", "J8", "M12", "N20", "Q18", "S5", "T20"
+    ];
+
+    const seatsArea = document.getElementById('seatsArea');
+    let seatElementsArr = [];
+    for(let row = 0; row < rows; row++) {
+      const rowLabel = String.fromCharCode(65 + row);
+      const seatRowDiv = document.createElement('div');
+      seatRowDiv.className = 'seat-row';
+      const labelSpan = document.createElement('span');
+      labelSpan.className = 'row-label';
+      labelSpan.textContent = rowLabel;
+      seatRowDiv.appendChild(labelSpan);
+      let rowSeatElems = [];
+      for(let col = 1; col <= seatsPerRow; col++) {
+        const seatId = rowLabel + col;
+        const seatDiv = document.createElement('div');
+        seatDiv.className = 'seat';
+        seatDiv.setAttribute('data-seat', seatId);
+        seatDiv.textContent = col;
+        if (occupiedSeats.includes(seatId)) seatDiv.classList.add('occupied');
+        rowSeatElems.push(seatDiv);
+        seatRowDiv.appendChild(seatDiv);
+      }
+      const labelSpanR = document.createElement('span');
+      labelSpanR.className = 'row-label';
+      labelSpanR.textContent = rowLabel;
+      seatRowDiv.appendChild(labelSpanR);
+      seatElementsArr.push(...rowSeatElems);
+      seatsArea.appendChild(seatRowDiv);
+    }
+
+    const selectedSeatsDisplay = document.getElementById('selectedSeats');
+    const confirmBtn = document.getElementById('confirmBtn');
+    let selectedSeats = [];
+    const ticketPrice = 190;
+    const totalCostDisplay = document.createElement('div');
+    totalCostDisplay.style.marginTop = '8px';
+    totalCostDisplay.style.fontWeight = '600';
+    totalCostDisplay.style.color = '#0ffebf';
+    selectedSeatsDisplay.parentNode.appendChild(totalCostDisplay);
+
+    seatElementsArr.forEach((seat) => {
+      if(!seat.classList.contains('occupied')) {
+        seat.addEventListener('click', () => {
+          const seatId = seat.getAttribute('data-seat');
+          if(seat.classList.contains('selected')) {
+            seat.classList.remove('selected');
+            selectedSeats = selectedSeats.filter(s => s !== seatId);
+          } else {
+            seat.classList.add('selected');
+            selectedSeats.push(seatId);
+          }
+          renderSelection();
+        });
+      }
+    });
+
+    function renderSelection() {
+      if(selectedSeats.length === 0) {
+        selectedSeatsDisplay.textContent = "None";
+        totalCostDisplay.textContent = '';
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = 'Confirm Booking';
+      } else {
+        selectedSeatsDisplay.textContent = selectedSeats.join(', ');
+        const totalCost = ticketPrice * selectedSeats.length;
+        totalCostDisplay.textContent = `Total Cost: ₹${totalCost}`;
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = `Confirm Booking (₹${totalCost})`;
+      }
+    }
+
+    confirmBtn.addEventListener('click', () => {
+      if(selectedSeats.length > 0) {
+        const totalCost = ticketPrice * selectedSeats.length;
+        window.location.href = `/qr?amount=${totalCost}`;
+      }
+    });
+  </script>
+  <footer>
+  &copy; 2025 TRAVELIFY Online Ticket & Hotel Booking. All rights reserved.
+  </footer>
+</body>
+</html>

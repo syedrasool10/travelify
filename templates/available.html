@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Available Buses - Travelify</title>
+  <style>
+    body {
+      margin:0; font-family: 'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; 
+      background-image: url('Website Banner.jpg');
+      background-position: center; background-size: cover;
+    }
+    .content {
+      max-width: 700px;
+      margin: 40px auto 0 auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgb(0 0 0 / 0.14);
+    }
+    h2 {
+      margin-top:0; color: #0073e6; text-align:center;
+    }
+    .bus-list {
+      margin-top: 25px;
+    }
+    .bus-card {
+      background:#f7fafd;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgb(0 0 0 / 0.11);
+      margin-bottom:20px;
+      padding: 1.15rem 1.7rem;
+      display:flex;
+      align-items: center;
+      justify-content: space-between;
+      border-left: 6px solid #0073e6;
+    }
+    .bus-info {
+      flex:1;
+    }
+    .bus-title {
+      font-size: 1.2em;
+      color: #0073e6;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .bus-details, .bus-extra {
+      font-size: 1em;
+      color: #555;
+    }
+    .bus-extra {
+      color: #7a7a7a;
+      font-size: 0.97em;
+    }
+    .bus-price {
+      font-size: 1.09em;
+      color: #005bb5;
+      font-weight: bold;
+      text-align: right;
+      padding-right: 20px;
+    }
+    .book-btn {
+      padding: 0.53rem 1.16rem;
+      background:#0073e6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.05em;
+      font-weight:600;
+      cursor:pointer;
+      transition: background 0.19s;
+    }
+    .book-btn:hover {
+      background: #005bb5;
+    }
+    /* Modal styles */
+    .modal-overlay {
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal {
+      background: white;
+      border-radius: 12px;
+      max-width: 480px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 20px 30px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      position: relative;
+    }
+    .modal-header {
+      font-weight: 700;
+      font-size: 1.5em;
+      color: #0073e6;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .close-btn {
+      cursor: pointer;
+      background: #ddd;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      color: #555;
+      border: none;
+      font-size: 1.2em;
+      line-height: 1;
+    }
+    .seats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 12px 18px;
+      justify-items: center;
+      margin-bottom: 20px;
+    }
+    .seat {
+      width: 42px;
+      height: 42px;
+      background: #e0e7ff;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: inset 0 0 5px #a3bffa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      color: #0040ff;
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+    .seat.selected {
+      background: #0040ff;
+      color: white;
+      box-shadow: 0 0 8px #0040ff;
+    }
+    .seat.occupied {
+      background: #aaa;
+      color: #666;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .seat-label {
+      grid-column: span 4;
+      text-align: center;
+      font-size: 0.9em;
+      color: #555;
+      margin-top: -8px;
+      margin-bottom: 14px;
+      user-select: none;
+    }
+    .book-selected-btn {
+      background: #0073e6;
+      color: white;
+      font-weight: 600;
+      border: none;
+      padding: 12px 0;
+      width: 100%;
+      border-radius: 6px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background 0.25s ease;
+    }
+    .book-selected-btn:hover {
+      background: #005bb5;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h2 id="routeTitle">Available Buses</h2>
+    <p id="searchInfo" style="text-align:center; color:#0073e6; font-weight:bold; margin-bottom: 20px;"></p>
+    <div class="bus-list" id="busList">Loading buses...</div>
+  </div>
+
+  <!-- Seat Selection Modal -->
+  <div class="modal-overlay" id="seatSelectionModal">
+    <div class="modal">
+      <div class="modal-header">
+        Select Your Seats
+        <button class="close-btn" id="closeModalBtn">&times;</button>
+      </div>
+      <div id="busName" style="color:#0073e6; font-weight:bold; margin-bottom: 15px;"></div>
+      <div class="seats" id="seatsContainer" aria-label="Bus Seats"></div>
+      <button class="book-selected-btn" id="confirmSeatsBtn">Book Selected Seats</button>
+    </div>
+  </div>
+
+<script>
+  // Seat layout constants
+  const SEAT_ROWS = 10;
+  const SEATS_PER_ROW = ['A', 'B', 'C', 'D'];
+
+  let selectedSeats = [];
+  let currentBusId = null;
+
+  const modal = document.getElementById('seatSelectionModal');
+  const seatsContainer = document.getElementById('seatsContainer');
+  const busNameDisplay = document.getElementById('busName');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const confirmSeatsBtn = document.getElementById('confirmSeatsBtn');
+  const busList = document.getElementById('busList');
+  const routeTitle = document.getElementById('routeTitle');
+  const searchInfo = document.getElementById('searchInfo');
+
+  // Function to load user search data from localStorage
+  function loadSearchData() {
+    return {
+      fromCity: localStorage.getItem("fromCity") || "",
+      toCity: localStorage.getItem("toCity") || "",
+      travelDate: localStorage.getItem("travelDate") || "",
+      busType: localStorage.getItem("busType") || "",
+      passengers: localStorage.getItem("passengers") || ""
+    };
+  }
+
+  function buildBusCards(apiBuses) {
+    busList.innerHTML = "";
+    if (!apiBuses.length) {
+      busList.innerHTML = "<p style='text-align:center; color:#777;'>No buses available for the selected criteria.</p>";
+      return;
+    }
+    apiBuses.forEach(bus => {
+      const busCard = document.createElement('div');
+      busCard.className = 'bus-card';
+      busCard.setAttribute('data-bus-id', bus.id || bus.bus_id || "unknown");
+
+      busCard.innerHTML = `
+        <div class="bus-info">
+          <div class="bus-title">${bus.operator || bus.type || "Bus"}</div>
+          <div class="bus-details">Departs: ${bus.departure_time || bus.depart} | Arrives: ${bus.arrival_time || bus.arrive}</div>
+          <div class="bus-extra">Seats: ${bus.seats_available || bus.seatsAvailable || 0} available | ${bus.amenities || bus.extras || ""}</div>
+        </div>
+        <div class="bus-price">&#8377; ${bus.price || 0}</div>
+        <button class="book-btn">Book Now</button>
+      `;
+      busList.appendChild(busCard);
+    });
+    attachBookNowListeners();
+  }
+
+  function attachBookNowListeners() {
+    document.querySelectorAll('.book-btn').forEach(button => {
+      button.addEventListener('click', e => {
+        const busCard = e.target.closest('.bus-card');
+        const busId = busCard.getAttribute('data-bus-id');
+        const busTitle = busCard.querySelector('.bus-title').textContent;
+        openModal(busId, busTitle);
+      });
+    });
+  }
+
+  function saveSelectedSeats(busId, seats) {
+    localStorage.setItem(`selectedSeats_${busId}`, JSON.stringify(seats));
+  }
+
+  function loadSelectedSeats(busId) {
+    const seats = localStorage.getItem(`selectedSeats_${busId}`);
+    return seats ? JSON.parse(seats) : [];
+  }
+
+  function renderSeats(busId) {
+    seatsContainer.innerHTML = '';
+    selectedSeats = loadSelectedSeats(busId);
+    const occupiedSeats = []; // You can replace with backend data if available
+
+    for(let row=1; row<=SEAT_ROWS; row++) {
+      const rowLabel = document.createElement('div');
+      rowLabel.classList.add('seat-label');
+      rowLabel.textContent = `Row ${row}`;
+      seatsContainer.appendChild(rowLabel);
+
+      SEATS_PER_ROW.forEach(seatLetter => {
+        const seatNum = `${row}${seatLetter}`;
+        const seatDiv = document.createElement('div');
+        seatDiv.classList.add('seat');
+        seatDiv.textContent = seatLetter;
+        seatDiv.setAttribute('data-seat-number', seatNum);
+        seatDiv.setAttribute('tabindex', '0');
+        seatDiv.setAttribute('aria-label', `Seat ${seatNum}`);
+
+        if (occupiedSeats.includes(seatNum)) {
+          seatDiv.classList.add('occupied');
+          seatDiv.setAttribute('aria-disabled', 'true');
+        } else if (selectedSeats.includes(seatNum)) {
+          seatDiv.classList.add('selected');
+        }
+
+        seatDiv.addEventListener('click', () => {
+          if (seatDiv.classList.contains('occupied')) return;
+          if (seatDiv.classList.contains('selected')) {
+            seatDiv.classList.remove('selected');
+            selectedSeats = selectedSeats.filter(s => s !== seatNum);
+          } else {
+            seatDiv.classList.add('selected');
+            selectedSeats.push(seatNum);
+          }
+        });
+
+        seatDiv.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            seatDiv.click();
+          }
+        });
+
+        seatsContainer.appendChild(seatDiv);
+      });
+    }
+  }
+
+  function openModal(busId, busTitle) {
+    currentBusId = busId;
+    busNameDisplay.textContent = busTitle;
+    renderSeats(busId);
+    modal.style.display = 'flex';
+  }
+
+  function closeModal() {
+    modal.style.display = 'none';
+    selectedSeats = [];
+    currentBusId = null;
+  }
+
+  closeModalBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => {
+    if (e.target === modal) closeModal();
+  });
+
+  confirmSeatsBtn.addEventListener('click', () => {
+    if (selectedSeats.length === 0) {
+      alert('Please select at least one seat to proceed.');
+      return;
+    }
+    saveSelectedSeats(currentBusId, selectedSeats);
+    alert(`You have booked the following seats on ${busNameDisplay.textContent}:\n${selectedSeats.join(', ')}`);
+    closeModal();
+  });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const filter = loadSearchData();
+
+    routeTitle.textContent = "Available Buses";
+    searchInfo.textContent =
+      `From: ${filter.fromCity} | To: ${filter.toCity} | Date: ${filter.travelDate} | Type: ${filter.busType || 'All'} | Passengers: ${filter.passengers}`;
+
+    if (!filter.fromCity || !filter.toCity) {
+      busList.innerHTML = "<p style='text-align:center; color:#900; font-weight:bold;'>Invalid search inputs. Please book from the booking page.</p>";
+      return;
+    }
+
+    const apiKey = "1d2dc6689amshf4ee190d4f0e130p1a7cecjsn6c479eb764ad'";        // <-- Replace with your API key
+    const apiAppId = "default-application_11067167";       // <-- Replace with your App ID
+    const apiBaseURL = "https://busmaps-gtfs-api.p.rapidapi.com/routes?origin=51.507198%2C-0.136512&destination=51.505983%2C-0.017931&departureTime=2025-02-11T09%3A06%3A00&arrivalTime=2025-02-11T09%3A06%3A00&transfers=1"; // <-- Replace with your API base URL
+
+    const apiURL = `${apiBaseURL}?from=${encodeURIComponent(filter.fromCity)}&to=${encodeURIComponent(filter.toCity)}&date=${encodeURIComponent(filter.travelDate)}&type=${encodeURIComponent(filter.busType)}`;
+
+    fetch(apiURL, {
+      method: 'GET',
+      headers: {
+        'X-API-KEY': apiKey,
+        'X-APP-ID': apiAppId,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (!data || data.length === 0) {
+        busList.innerHTML = "<p style='text-align:center; color:#777;'>No buses available for the selected criteria.</p>";
+      } else {
+        buildBusCards(data);
+      }
+    })
+    .catch(err => {
+      console.error('API fetch error:', err);
+      busList.innerHTML = "<p style='text-align:center; color:#900;'>Failed to load buses. Please try again later.</p>";
+    });
+  });
+</script>
+</body>
+</html>

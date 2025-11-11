@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Google Pay QR Code with Amount</title>
+  <style>
+    body {
+      background-image: url('Website Banner.jpg');
+      background-position: center;
+      background-size: cover;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+    }
+    .qr-section {
+      background: #293366;
+      padding: 32px 16px;
+      border-radius: 14px;
+      display: inline-block;
+      margin: 32px auto 0;
+      box-shadow: 0 6px 20px #0003;
+    }
+    label, input {font-size:1rem;}
+    input {border-radius:6px; border:1px solid #b7c3d8; padding: 4px 12px; margin: 3px;}
+    button {background:#429ae6; color:white; border:none; padding:7px 27px; margin:12px 0 0 0; border-radius:5px;}
+    img {margin: 14px 0;}
+    header {
+      text-align: left;
+      padding: 20px;
+      background-color: #0073e6;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      position: relative;
+      color: white;
+    }
+    .header-content {
+      display: flex;
+      align-items: center;
+      background-color: #0073e6;
+    }
+    .site-logo {
+      height: 65px;
+      width: 65px;
+      border-radius: 12px;
+      margin-right: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .site-title h1 {
+      margin: 0;
+      font-size: 2.2em;
+      color: white;
+      letter-spacing: 2px;
+    }
+    .site-title p {
+      margin: 6px 0 0 0;
+      font-size: 1em;
+      color: #f5f5f5;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #0073e6;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 10px;
+    }
+    nav ul li {
+      display: inline;
+    }
+    nav a {
+      display: block;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    nav a:hover {
+      background: #2575fc;
+      border-radius: 4px;
+    }
+    .user-info {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding-right: 20px;
+    }
+    .user-info a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 4px;
+      background: #2575fc;
+      transition: background 0.3s ease;
+    }
+    .user-info a:hover {
+      background: #1a56c5;
+    }
+    footer {
+      background-color: #0073e6;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 14px;
+      color:white;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+   <header>
+    <div class="header-content">
+      <img src="/static/Screenshot 2025-09-02 121057.png" alt="Travelify Logo" class="site-logo">
+      <div class="site-title">
+        <h1>TRAVELIFY</h1>
+        <p>ONLINE TICKET & HOTEL BOOKING FOR ALL PEOPLE'S JOURNEY</p>
+      </div>
+    </div>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="/bus">Bus Ticket</a></li>
+      <li><a href="/train">Train Ticket</a></li>
+      <li><a href="/flight">Flight Ticket</a></li>
+      <li><a href="/hotel">Hotel Ticket</a></li>
+    </ul>
+      <div class="user-info">
+    {% if session.get('user') %}
+      <span style="color: white; padding: 8px 14px;">Welcome, {{ session['user']['full_name'] }}!</span>
+      <a href="/logout">Logout</a>
+    {% else %}
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    {% endif %}
+  </div>
+  </nav>
+  <div class="qr-section">
+    <form id="qrForm" onsubmit="event.preventDefault(); makeQR();">
+      <div>
+        <label>UPI ID (pa): </label>
+        <input type="text" id="upiId" value="yourupiid@okicici" required> 
+      </div>
+      <div>
+        <label>Name (pn): </label>
+        <input type="text" id="payeeName" value="Your Name" required>
+      </div>
+      <div>
+        <label>Amount (₹): </label>
+        <input type="number" min="1" max="100000" id="amount" value="500" required>
+      </div>
+      <div>
+        <label>Note (opt): </label>
+        <input type="text" id="note" maxlength="25" placeholder="Purpose of Payment">
+      </div>
+      <button type="submit">Generate QR</button>
+    </form>
+    <div id="qrContainer"></div>
+  </div>
+
+  <script>
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    function makeQR() {
+      const upiId = document.getElementById('upiId').value.trim();
+      const payee = encodeURIComponent(document.getElementById('payeeName').value.trim());
+      const amount = parseFloat(document.getElementById('amount').value.trim());
+      const note = encodeURIComponent(document.getElementById('note').value.trim());
+      if (!upiId || !payee || !amount) return;
+
+      let upiString = `upi://pay?pa=${upiId}&pn=${payee}&am=${amount}&cu=INR`;
+      if (note) upiString += `&tn=${note}`;
+
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiString)}`;
+
+      document.getElementById('qrContainer').innerHTML =
+        `<img src="${qrUrl}" alt="GPay/UPI QR"><br>
+        <small>Scan this with Google Pay, PhonePe, Paytm or any UPI app to pay ₹${amount}</small>`;
+    }
+
+    window.onload = function() {
+      const amountFromQuery = getQueryParam('amount');
+      if(amountFromQuery && !isNaN(amountFromQuery)) {
+        document.getElementById('amount').value = amountFromQuery;
+      }
+      makeQR();
+    }
+    
+  </script>
+
+  <footer>
+   &copy; 2025 TRAVELIFY Online Ticket & Hotel Booking. All rights reserved.
+  </footer>
+</body>
+</html>
